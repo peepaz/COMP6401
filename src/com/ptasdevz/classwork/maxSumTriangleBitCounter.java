@@ -1,4 +1,4 @@
-package tutorials;
+package com.ptasdevz.classwork;
 
 public class maxSumTriangleBitCounter {
 	static int maxSum =0;

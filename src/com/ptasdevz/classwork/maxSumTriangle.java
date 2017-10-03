@@ -1,4 +1,4 @@
-package tutorials;
+package com.ptasdevz.classwork;
 
 public class maxSumTriangle {
 	static int maxSum =0;
