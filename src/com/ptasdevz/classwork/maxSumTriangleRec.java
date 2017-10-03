@@ -37,14 +37,13 @@ public class maxSumTriangleRec {
 		
 		int j =0;
 		System.out.print(triangle[0][0]);
-		for (int i=1; i<bestPathMap.length; i++) {
-			
-//			if (j<bestPathMap[i].length){
-			if (bestPathMap[i][j] == 1)System.out.print(triangle[i][j+1]);
-			else System.out.print(triangle[i][j]);
+		for (int i=0; i<bestPathMap.length; i++) {
+
+			if (bestPathMap[i][j] == 0) System.out.print(triangle[i+1][j]); //go left
+
+			else if (bestPathMap[i][j] == 1) System.out.print(triangle[i+1][++j]); //go right
 			
 		}
-		
 			
 	}
 	
@@ -57,11 +56,11 @@ public class maxSumTriangleRec {
 		int apex = tri[i][j];
 		
 		if (left > right) {
-			System.out.println(i + " " + j + " => left "+ (left + apex));
+//			System.out.println(i + " " + j + " => left "+ (left + apex));
 			bestPathMap[i][j] =0;
 		}
 		else {
-			System.out.println(i + " " + j + " => right "+ (right + apex));
+//			System.out.println(i + " " + j + " => right "+ (right + apex));
 
 			bestPathMap[i][j] = 1;
 		}
