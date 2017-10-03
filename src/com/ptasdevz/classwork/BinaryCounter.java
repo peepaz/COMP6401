@@ -1,4 +1,4 @@
-package com.ptasdevz.classwork;
+package tutorials;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
