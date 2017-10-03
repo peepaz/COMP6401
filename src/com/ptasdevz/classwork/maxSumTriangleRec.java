@@ -51,8 +51,7 @@ public class maxSumTriangleRec {
 	public static int getMaxSum(int[][] tri, int i, int j, int n){
 		
 		if (i==n) return tri[i][j];
-//		return max(getMaxSum(tri, i+1, j, n),getMaxSum(tri, i+1, j+1, n)) + tri[i][j];
-		
+
 		int left = getMaxSum(tri, i+1, j, n);
 		int right = getMaxSum(tri, i+1, j+1, n);
 		int apex = tri[i][j];
