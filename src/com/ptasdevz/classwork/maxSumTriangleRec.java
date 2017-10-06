@@ -70,7 +70,7 @@ public class maxSumTriangleRec {
 		
             System.out.printf("stored %d %d => %d\n",i,j,val);
 //             memoSum[i][j] = val;
-		memoSum[pos] = val;
+		memoSum[memoSumPos] = val;
             if (left > right) {
 //			System.out.println(i + " " + j + " => left "+ (left + apex));
                 bestPathMap[i][j] =0;
@@ -82,10 +82,10 @@ public class maxSumTriangleRec {
             }
         }
         else {
-            System.out.printf("memo %d %d => %d\n",i,j,memoSum[i][j]);
+            System.out.printf("memo %d %d => %d\n",i,j,memoSum[memoSumPos]);
         }
 
-        return memoSum[pos];
+        return memoSum[memoSumPos];
 
 
     }
