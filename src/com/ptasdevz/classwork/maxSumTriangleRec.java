@@ -20,10 +20,9 @@ public class maxSumTriangleRec {
 				is[i] = -1;
 			}
 		}
-		for (int[] is : memoSum) {
-			for (int i = 0; i < is.length; i++) {
-				is[i] = -1;
-			}
+		
+		for (int i = 0; i < memoSum.length; i++) {
+			memoSum[i] = -1;
 		}
 		triangle[0][0] = 7;
 		triangle[1][0] = 3;
