@@ -81,7 +81,7 @@ public class maxSumTriangleRec {
             }
         }
         else {
-            System.out.printf("memo %d %d => %d\n",i,j,memoSum[memoSumPos]);
+            System.out.printf("memo %d => %d\n"memoSumPos,memoSum[memoSumPos]);
         }
 
         return memoSum[memoSumPos];
