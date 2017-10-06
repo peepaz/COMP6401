@@ -4,14 +4,21 @@ public class maxSumTriangleRec {
 
 	static int maxSum =0;
 	static int [][] bestPathMap;
-	
-	public static void main(String[] args) {
+    static int memoSum[][];
+
+    public static void main(String[] args) {
 		
 		int size = 5;
 		int [][] triangle = new int [size][size];
 		int[]  bestPath = new int [size];
 		bestPathMap = new int [size][size];
+		memoSum = new int[size ][size];
 		for (int[] is : bestPathMap) {
+			for (int i = 0; i < is.length; i++) {
+				is[i] = -1;
+			}
+		}
+		for (int[] is : memoSum) {
 			for (int i = 0; i < is.length; i++) {
 				is[i] = -1;
 			}
@@ -51,28 +58,37 @@ public class maxSumTriangleRec {
 		
 		if (i==n) return tri[i][j];
 
-		int left = getMaxSum(tri, i+1, j, n);
-		int right = getMaxSum(tri, i+1, j+1, n);
-		int apex = tri[i][j];
-		
-		if (left > right) {
+        if (memoSum[i][j] == -1) {
+
+            int left = getMaxSum(tri, i+1, j, n);
+            int right = getMaxSum(tri, i+1, j+1, n);
+            int apex = tri[i][j];
+            int val = max(left,right) + apex;
+            System.out.printf("stored %d %d => %d\n",i,j,val);
+            memoSum[i][j] = val;
+            if (left > right) {
 //			System.out.println(i + " " + j + " => left "+ (left + apex));
-			bestPathMap[i][j] =0;
-		}
-		else {
+                bestPathMap[i][j] =0;
+            }
+            else {
 //			System.out.println(i + " " + j + " => right "+ (right + apex));
 
-			bestPathMap[i][j] = 1;
-		}
-		
-		return max(left,right) + apex; 
+                bestPathMap[i][j] = 1;
+            }
+        }
+        else {
+            System.out.printf("memo %d %d => %d\n",i,j,memoSum[i][j]);
+        }
 
-	}
+        return memoSum[i][j];
+
+
+    }
 
 	private static int max(int i, int j) {
 		
 		if (i>j)return i;
-		return j;;
+		return j;
 	}
 
 }
