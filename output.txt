@@ -1,6 +1,2 @@
-words                         synonyms
-
-blossom                       flower	
-bewilder                      confound	confuse	perplex	strong	
-                              
-dwell                         live	reside	
+10
+1 2 3 4 4 5 
