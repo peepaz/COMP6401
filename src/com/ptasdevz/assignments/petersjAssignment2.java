@@ -6,13 +6,23 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 
 /**
- * Created by jason on 07/10/2017.
+ * Name: Jason Peters
+ * ID:811100537
+ *
+ * Method of Solution:
+ * Each element in the first column of the 2D-Array grid was was treated as an apex to a triangle that comprises of
+ * other sub-triangles via the next element that is diagonally up, horizontal, and diagonally down. All paths were enumerated
+ * for each triangle and the sum of the values on each path was calculated and compared to return the minimum. The minimum
+ * of all the triangles was  stored along with its path and compared  to get the best minimum and its corresponding path in the 2D array.
+ * The solution was optimized by using the memoization approach to avoid the redoing of work of calculating the minimum sum
+ * in the enumeration process of the paths.
+ *
  */
 public class petersjAssignment2 {
 
     static int[][] GRID;
     static int [][] BEST_MIN_PATH;
-    static String memoizedMinSum[];
+    static String MEMOIZED_MIN_SUM[];
 
     public static void main(String [] args){
 
@@ -20,9 +30,9 @@ public class petersjAssignment2 {
 
         try {
             //Create 2D-array and populate with elements from file
-            FileReader in = new FileReader("input4.txt");
+            FileReader in = new FileReader("input5.txt");
             int ch, n=-1,m=-1;
-            String number = "";
+            String number = ""; //a positive or negative number to be stored in the 2D-array
             while (true){
                 ch = in.read();
                 if (ch >= '0' && ch <='9' || ch == '-')number += (char)ch; //build both negative and positive integers
@@ -47,28 +57,30 @@ public class petersjAssignment2 {
                 }
             }
 
-            int steps = GRID[0].length-1;
+            int steps = GRID[0].length-1; // number of steps to complete a path
             BEST_MIN_PATH = new int[m][n];
-            memoizedMinSum = new String [(n* (m-1)) + n];//calculate index for last pos of the Grid +1
+            MEMOIZED_MIN_SUM = new String [(n* (m-1)) + n];//initialize to the amount of elements in GRID
 
-            int bestMin=0;
+            //Store the best minimum sum along with starting position for its path
+            int bestMinSum=0;
             int bestStartPos = -1;
             for (int l = 0; l < GRID.length; l++) {
 
                 int minSum = getMinSum(GRID,l,0,steps);
                 if (l==0){
-                    bestMin = minSum;
+                    bestMinSum = minSum;
                     bestStartPos = l;
                 }
-                else if (minSum < bestMin){
-                    bestMin = minSum;
+                else if (minSum < bestMinSum){
+                    bestMinSum = minSum;
                     bestStartPos = l;
                 }
             }
-            writeOutput(bestMin,bestStartPos);
+
+            writeOutput(bestMinSum,bestStartPos);
 
         }catch (Exception e){
-//                e.printStackTrace();
+                e.printStackTrace();
         }
 
     }
@@ -77,21 +89,22 @@ public class petersjAssignment2 {
 
         if (j==steps) return GRID[i][j];
 
-        int memoSumPos = (GRID.length*i) + j;
+        int memoSumPos = (GRID[0].length*i) + j;
 
-        if (memoizedMinSum[memoSumPos] == null) {
+        if (MEMOIZED_MIN_SUM[memoSumPos] == null) {//check if the minimum sum is already computed and stored.
 
             int diagUpSum = -1;
             int diagDownSum = -1;
             int horizontialSum = -1;
 
-            //check for wrap around conditions
-            if (i - 1 < 0) diagUpSum = getMinSum(GRID, GRID.length - 1, j + 1, steps);
+//            //check for wrap around conditions
+            if (i - 1 < 0) diagUpSum = getMinSum(GRID, GRID.length - 1, j + 1, steps);//wrap around from top to bottom
             else diagUpSum = getMinSum(GRID, i - 1, j + 1, steps);
 
             horizontialSum = getMinSum(GRID, i, j + 1, steps);
 
-            if (i + 1 > GRID.length - 1) diagDownSum = getMinSum(GRID, GRID.length - 1, j + 1, steps);
+            if (i + 1 > GRID.length - 1) diagDownSum = getMinSum(GRID, 0 , j + 1, steps); //wrap around
+                                                                                            //from bottom to the top
             else diagDownSum = getMinSum(GRID, i + 1, j + 1, steps);
 
 
@@ -102,10 +115,10 @@ public class petersjAssignment2 {
             else if (bestMinSum == horizontialSum) BEST_MIN_PATH[i][j] = 2;
             else BEST_MIN_PATH[i][j] = 3;
 
-            memoizedMinSum[memoSumPos] = String.valueOf(bestMinSum +GRID[i][j]);
+            MEMOIZED_MIN_SUM[memoSumPos] = String.valueOf(bestMinSum +GRID[i][j]);
         }
 
-        return  Integer.parseInt(memoizedMinSum[memoSumPos]);
+        return  Integer.parseInt(MEMOIZED_MIN_SUM[memoSumPos]);
 
     }
 

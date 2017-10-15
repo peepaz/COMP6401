@@ -29,7 +29,7 @@ public static void addOne(int [] bitSeq){
 		while (true){
 			for (int i= bitSeq.length-1; i >=0; i--){
 				
-				if (bitSeq[i] == 0) {
+				if (bitSeq[i] == 0) {// increase seq count by one then stop
 					bitSeq[i] = 1;
 					zerosCount =0;// reset zero counter
 					break;

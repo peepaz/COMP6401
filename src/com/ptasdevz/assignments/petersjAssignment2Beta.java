@@ -63,7 +63,7 @@ public class petersjAssignment2Beta {
             BEST_MIN_PATH = new int[m][n];
             memoizedMinSum = new String [(n* (m-1)) + n];// last pos in Grid + 1
 //            int nn= 99, mm =20;
-//            memoizedMinSum = new String [(nn* (mm-1)) + nn];// last pos in Grid + 1
+//            MEMOIZED_MIN_SUM = new String [(nn* (mm-1)) + nn];// last pos in Grid + 1
 
             BEST_MIN_PATH = new int[20][99];
 
