@@ -59,7 +59,7 @@ public class maxSumTriangleRec {
 		
 		if (i==n) return tri[i][j];
 
-	int memoSumPos = (tri.length*i) + j;
+		int memoSumPos = (tri.length*i) + j;
         if (memoSum[memoSumPos] == -1) {
 
             int left = getMaxSum(tri, i+1, j, n);
@@ -69,7 +69,7 @@ public class maxSumTriangleRec {
 		
             System.out.printf("stored %d %d => %d\n",i,j,val);
 //             memoSum[i][j] = val;
-		memoSum[memoSumPos] = val;
+			memoSum[memoSumPos] = val;
             if (left > right) {
 //			System.out.println(i + " " + j + " => left "+ (left + apex));
                 bestPathMap[i][j] =0;

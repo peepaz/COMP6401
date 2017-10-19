@@ -26,24 +26,24 @@ public class LongestCommonSubBR {
         String cs="";
 
         //generate all possibilities of the shorter string
-        int shortestSeqLenght;
+        int shortestSeqLength;
         String shortesSeq;
         int xLength = X.length();
         int yLength = Y.length();
         String longestSeq;
         if (xLength < yLength) {
-            shortestSeqLenght = xLength;
+            shortestSeqLength = xLength;
             shortesSeq = X;
             longestSeq = Y;
         }
         else {
-            shortestSeqLenght = yLength;
+            shortestSeqLength = yLength;
             shortesSeq = Y;
             longestSeq = X;
 
         }
 
-        int[] bitSeq = new int[shortestSeqLenght];
+        int[] bitSeq = new int[shortestSeqLength];
         for (int i = 0; i < bitSeq.length ; i++)bitSeq[i] =0;
         int zeroSeqCounter = 0;
         while (true){
@@ -74,12 +74,13 @@ public class LongestCommonSubBR {
                      if (subSeq.charAt(i) == longestSeq.charAt(j)) {
                          lcsSize++;
                          cs += subSeq.charAt(i);
-                         lastSearchSeqPos =j;
+                         lastSearchSeqPos =j; // to be used in the next value of the sequence
                          break;
                      }
                 }
             }
 
+            //get the longest common subsequence
            if (lcsSize > lcsSizeMax){
                 lcsSizeMax = lcsSize;
                 lcs = cs;

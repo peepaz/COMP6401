@@ -36,19 +36,19 @@ public class maxSumTriangleBitCounter {
 	
 	public static void calMaxSumAndPath(int [][] triangle){
 		
-		int [] bitSeq = new int [triangle.length-1];
+		int [] bitSeq = new int [triangle.length-1]; //the bit sequence lenght is triangle depth -1
 		int [] path = new int [triangle.length];	
-		for (int i =0; i< bitSeq.length; i++) bitSeq[i]=0;
+		for (int i =0; i< bitSeq.length; i++) bitSeq[i]=0; //initialize the sequence
 		
-		int firstVal = triangle[0][0];
-		path[0] = firstVal;
+		int apex = triangle[0][0];
+		path[0] = apex; //the apex is the first value in the maximum sum
 		
-		int zerosCount =0, l=0, m=0, pathSum=firstVal;
+		int zerosCount =0, l=0, m=0, pathSum=apex;
 		
 		//Brute force 
 		while (true){
 			
-			//use sequence to navigate triangle
+			//use possibilities from bit sequence to navigate triangle
 			for (int k=0; k<bitSeq.length; k++){
 				if (bitSeq[k] == 0) l = l+1; //go right
 				else {
@@ -56,10 +56,11 @@ public class maxSumTriangleBitCounter {
 					l= l+1;
 					m = m+1;
 				}
+
 				if (l < triangle.length && m < triangle[0].length){ // ensure navigation is within array bounds
 					int val = triangle[l][m];
-					pathSum += val;
-					path[k+1] = val;
+					pathSum += val; // get sum as you traverse the triangle
+					path[k+1] = val; //store the value on the current path
 //					System.out.println(k+1 +" => " + val);
 				}
 				
@@ -76,7 +77,7 @@ public class maxSumTriangleBitCounter {
 			if (zerosCount == bitSeq.length) break;// binary counter has restarted
 
 			//reset variables for next sequence
-			pathSum =firstVal;
+			pathSum =apex;
 			l=0; m=0;
 			
 			
