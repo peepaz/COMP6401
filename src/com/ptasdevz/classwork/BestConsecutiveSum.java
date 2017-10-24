@@ -21,6 +21,12 @@ public class BestConsecutiveSum {
 
 
     }
+
+    /**
+     * Brute force method of getting sum O(n^2)
+     * @param arr
+     * @return
+     */
     public static int getBestSum(int[] arr){
 
         int max = -10;
