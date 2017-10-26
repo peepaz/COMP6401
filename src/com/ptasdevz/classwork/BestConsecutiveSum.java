@@ -5,17 +5,20 @@ package com.ptasdevz.classwork;
  */
 public class BestConsecutiveSum {
 
-    static int pathPos=-1;
+    static int patStrtPos =-1;
+    static int pathEndPos =-1;
     public static void main (String [] args){
         int[]  seq = {-3,5,6,-7,-2,8,-4,7,-9,3};
 
-        int max = getBestSum2(seq);
+        int max = getBestSumN(seq);
         System.out.println(max);
+        System.out.println(patStrtPos);
+        System.out.println(pathEndPos);
 
         int sum =0;
-        for (int i = pathPos; i < seq.length; i++) {
+        for (int i = patStrtPos; i <= pathEndPos; i++) {
             sum += seq[i];
-            if (sum == max) break;
+//            if (sum == max) break;
             System.out.printf("%d ",seq[i]);
         }
 
@@ -27,7 +30,7 @@ public class BestConsecutiveSum {
      * @param arr
      * @return
      */
-    public static int getBestSum(int[] arr){
+    public static int getBestSumOn2(int[] arr){
 
         int max = -10;
 
@@ -39,11 +42,12 @@ public class BestConsecutiveSum {
                 if (vectorSum > max) max = vectorSum;
             }
         }
+
         return max;
 
     }
 
-    public static  int getBestSum2(int[] arr){
+    public static  int getBestSumN(int[] arr){
 
         int[] max = new int[arr.length];
         int bestSum = -10;
@@ -54,14 +58,14 @@ public class BestConsecutiveSum {
             if (i==0){
                 max[i] = arr[i];
                 bestSum = arr[i];
-                pathPos = i;
+                patStrtPos = i;
             }
 
             //Subsequent positions
             else {
                 if (max[i-1] < 0){//check for negative sum which cannot help
                     max[i] = arr[i];//start new vector
-                    pathPos = i; //start new path
+                    patStrtPos = i; //start new path
                 }
                 else {
                     max[i] = arr[i] + max[i-1]; //continue extending vector
@@ -70,6 +74,7 @@ public class BestConsecutiveSum {
 
                 if (max[i] > bestSum) { //get max sum of vector at present
                     bestSum = max[i];
+                    pathEndPos = i;
                 }
             }
 

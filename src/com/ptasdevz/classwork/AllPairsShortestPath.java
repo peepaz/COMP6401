@@ -10,17 +10,24 @@ public class AllPairsShortestPath {
 
     public static void main (String [] args){
 
-        D = new int[4][4];
-        path = new int [4][4];
+        D = new int[5][5];
+        path = new int [5][5];
         D[1][1] = 0;
-        D[1][2] = 2;
-        D[1][3] = 9;
-        D[2][1] = 8;
+        D[1][2] = 9999;
+        D[1][3] = 4;
+        D[1][4] = 9999;
+        D[2][1] = 9999;
         D[2][2] = 0;
-        D[2][3] = 6;
-        D[3][1] = 1;
-        D[3][2] = -1;
+        D[2][3] = 9999;
+        D[2][4] = 7;
+        D[3][1] = 18;
+        D[3][2] = 5;
         D[3][3] = 0;
+        D[3][4] = 999;
+        D[4][1] = 3;
+        D[4][2] = 999;
+        D[4][3] = 9;
+        D[4][4] = 0;
         getAllPairsShortestPath();
 
 
@@ -31,7 +38,7 @@ public class AllPairsShortestPath {
         for (int k = 1; k < D.length; k++) {
 
             for (int i = 1; i < D.length; i++) {
-                for (int j = 1; j < D.length; j++) {
+                for (int j = 1; j < D[i].length; j++) {
                     int intermediaryCost = (D[i][k] + D[k][j]);
                     if (intermediaryCost < D[i][j]){
                         D[i][j] = intermediaryCost;

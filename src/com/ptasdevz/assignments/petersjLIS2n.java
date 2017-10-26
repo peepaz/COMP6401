@@ -1,24 +1,74 @@
 package com.ptasdevz.assignments;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.util.concurrent.TimeUnit;
+
 public class petersjLIS2n {
 
-    static int[] A = {2, 15, 3, 7, 8, 6, 18,3,3,3,3,3,3,3,3,4,4,7,9,9,100,4,67,67,89,10,79,34};
-
-    static int [] maxSeqVals = new int[A.length];
+    static  int [] A;
+    static int [] maxSeqVals;
 
     public static void main (String[] args){
 
-        long millisStart = System.currentTimeMillis();
-        int max = getLIS(A, A.length);
-        long millisEnd = System.currentTimeMillis();
+        int ch;
+        String number = "";
+        int [] tempStorage = new int[10000];
+        try {
 
-        System.out.printf("Length: %d\n",max);
-        System.out.printf("LIS: ");
-        for (int i = 0; i < maxSeqVals.length; i++) {
-            if (maxSeqVals[i] == 1) System.out.printf("%d ", A[i]);
+            FileReader in = new FileReader("input.txt");
+            int numberCount = 0;
+            while (true) {
+
+                ch = in.read();
+                if (ch >= '0' && ch <= '9') number += (char) ch; //build integers
+                else {
+                    if (number.compareTo("") != 0) {
+                        int n = Integer.parseInt(number);
+                        tempStorage[numberCount] = n;
+                        numberCount++;
+                    }
+                    number = "";
+                }
+                if (ch == -1)break;
+            }
+            A = new int[numberCount];
+            maxSeqVals = new int[A.length];
+            for (int i = 0; i <A.length; i++) {
+                A[i] = tempStorage[i];
+            }
+
+            long startTime = System.nanoTime();
+            int max = getLIS(A, A.length);
+            long estimatedTimeNano = System.nanoTime() - startTime;
+            long estimatedTimeMillSec = TimeUnit.NANOSECONDS.toMillis(estimatedTimeNano);
+            estimatedTimeNano = (estimatedTimeNano - TimeUnit.MILLISECONDS.toNanos(estimatedTimeMillSec));
+
+            writeToFileResult(max, estimatedTimeMillSec, estimatedTimeNano);
+
+        }catch (Exception e){
+//            e.printStackTrace();
         }
-        System.out.printf("\nTime in millis: %d\n",millisEnd - millisStart);
 
+    }
+
+    private static void writeToFileResult(int max, long estimatedTimeMilliSec, long estimatedTimeNano) {
+
+        try {
+            PrintWriter out = new PrintWriter(new FileOutputStream("output.txt"));
+            out.printf("Length: %d\n",max);
+            out.printf("LIS: ");
+            for (int i = 0; i < maxSeqVals.length; i++) {
+                if (maxSeqVals[i] == 1) out.printf("%d ", A[i]);
+            }
+            out.printf("\nTotal Execution Time: %d.%s millisecond(s)\n",estimatedTimeMilliSec,String.valueOf(estimatedTimeNano).substring(0,3));
+            out.flush();
+
+        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+        }
     }
 
     public static int getLIS(int[] M, int bitSeqSize){

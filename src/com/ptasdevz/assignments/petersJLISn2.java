@@ -1,37 +1,66 @@
 package com.ptasdevz.assignments;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.util.concurrent.TimeUnit;
+
 public class petersJLISn2 {
 
 
-    static int[] A = {2, 15, 3, 7, 8, 6, 18,3,3,3,3,3,3,3,3,4,4,7,9,9,100,4,67,67,89,10,79,34};
-
-    static int[] L = new int[A.length];
-    static int[] E =  new int[A.length];
+    static int[] A;
+    static int[] L;
+    static int[] E;
 
     public static void main(String[] args) {
 
-        //initialize all lenghts to 1 	and end points to 0
-        for (int i = 0; i < L.length; i++) {
-            L[i] =1;
-            E[i] =i;
-        }
-        long millisStrt = System.currentTimeMillis();
-        int max = getLis();
-        long millisEnd = System.currentTimeMillis();
+        int ch;
+        String number = "";
+        int [] tempStorage = new int[10000];
+        try {
 
-        System.out.printf("Length is: %d\n",max);
-        System.out.printf("LIS: ");
-        for (int i = 0; i < L.length; i++) {
-            if (max ==L[i]) {
-                printPath(i);
-                break;
+            FileReader in = new FileReader("input.txt");
+            int numberCount = 0;
+            while (true) {
+
+                ch = in.read();
+                if (ch >= '0' && ch <= '9') number += (char) ch; //build integers
+                else {
+                    if (number.compareTo("") != 0) {
+                        int n = Integer.parseInt(number);
+                        tempStorage[numberCount] = n;
+                        numberCount++;
+                    }
+                    number = "";
+                }
+                if (ch == -1)break;
             }
+            A = new int[numberCount];
+            L = new int[A.length];
+            E =  new int[A.length];
+
+            //initialize all lenghts to 1 	and end points to 0
+            for (int i = 0; i < A.length; i++) {
+                L[i] =1;
+                E[i] =i;
+                A[i] = tempStorage[i];
+            }
+            long startTime = System.nanoTime();
+            int max = getLIS();
+            long estimatedTimeNano = System.nanoTime() - startTime;
+            long estimatedTimeMillSec = TimeUnit.NANOSECONDS.toMillis(estimatedTimeNano);
+            estimatedTimeNano = (estimatedTimeNano - TimeUnit.MILLISECONDS.toNanos(estimatedTimeMillSec));
+            writeToFileResult(max, estimatedTimeMillSec, estimatedTimeNano);
+
+
+        }catch (Exception e){
+//            e.printStackTrace();
         }
-        System.out.printf("\nTime in millis: %d\n",millisEnd - millisStrt);
 
     }
 
-    public static int getLis(){
+    public static int getLIS(){
         int max = 1;
         for (int i = 1; i < A.length; i++) {
             for (int j = 0; j < i; j++) {
@@ -56,20 +85,36 @@ public class petersJLISn2 {
     }
 
     public static int max(int m,int n){
-        if (m>n){
-            return m;
-        }
+        if (m>n)return m;
         return n;
     }
 
-    //print path recursively from array link list
-    public static void printPath(int idxHead){
+    private static void writeToFileResult(int max, long estimatedTimeMilliSec, long estimatedTimeNano) {
 
-        if (idxHead == E[idxHead]) System.out.printf("%d ", A[idxHead]);
-        else{
-            printPath(E[idxHead]);
-            System.out.printf("%d ", A[idxHead]);
+        try {
+            PrintWriter out = new PrintWriter(new FileOutputStream("output.txt"));
+            out.printf("Length: %d\n",max);
+            out.printf("LIS: ");
+            for (int i = 0; i < L.length; i++) {
+                if (max ==L[i]) {
+                    out.write(printPath(i));
+                    break;
+                }
+            }
+            out.printf("\nTotal Execution Time: %d.%s millisecond(s)\n",estimatedTimeMilliSec,
+                    String.valueOf(estimatedTimeNano).substring(0,3));
+            out.flush();
+
+        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
         }
-
     }
+
+    //print path recursively from array link list
+    public static String printPath(int idxHead){
+
+        if (idxHead == E[idxHead]) return String.valueOf(A[idxHead]);
+           return printPath(E[idxHead]) +" "+ A[idxHead];
+    }
+
 }

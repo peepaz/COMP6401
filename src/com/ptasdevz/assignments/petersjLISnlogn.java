@@ -1,28 +1,69 @@
 package com.ptasdevz.assignments;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.concurrent.TimeUnit;
 
 public class petersjLISnlogn {
 
-    static int[] A = {2, 15, 3, 7, 8, 6, 18,3,3,3,3,3,3,3,3,4,4,7,9,9,100,4,67,67,89,10,79,34};
+    static int[] A;
 
     static ArrayList<Stack<ElementNode>> heaps;
 
     public static void main(String[] args){
-        heaps = new ArrayList<>();
-        long millisStrt = System.currentTimeMillis();
-        int lisSize = getLis();
-        long millisEnd = System.currentTimeMillis();
 
-        System.out.printf("Length is: %d \n",lisSize);
-        System.out.printf("LIS: ");
-        printLis(heaps.get(heaps.size()-1).peek());
-        System.out.printf("\nTime in millis: %d\n",millisEnd - millisStrt);
+        int ch;
+        String number = "";
+        int [] tempStorage = new int[10000];
+        try {
+
+            FileReader in = new FileReader("input.txt");
+            int numberCount = 0;
+            while (true) {
+
+                ch = in.read();
+                if (ch >= '0' && ch <= '9') number += (char) ch; //build integers
+                else {
+                    if (number.compareTo("") != 0) {
+                        int n = Integer.parseInt(number);
+                        tempStorage[numberCount] = n;
+                        numberCount++;
+                    }
+                    number = "";
+                }
+                if (ch == -1)break;
+            }
+
+            A = new int[numberCount];
+            for (int i = 0; i <A.length; i++) {
+                A[i] = tempStorage[i];
+            }
+
+            heaps = new ArrayList<>();
+            long startTime = System.nanoTime();
+            int max = getLIS();
+            long estimatedTimeNano = System.nanoTime() - startTime;
+            long estimatedTimeMillSec = TimeUnit.NANOSECONDS.toMillis(estimatedTimeNano);
+            estimatedTimeNano = (estimatedTimeNano - TimeUnit.MILLISECONDS.toNanos(estimatedTimeMillSec));
+
+            ElementNode node;
+            if (heaps.size() > 0) {
+                 node =heaps.get(heaps.size()-1).peek();
+                writeToFileResult(max,estimatedTimeMillSec,estimatedTimeNano,node);
+
+            }
+
+        }catch (Exception e){
+//            e.printStackTrace();
+        }
 
     }
 
-    public static int getLis(){
+    public static int getLIS(){
 
         for (int i = 0; i < A.length; i++) {
 
@@ -67,6 +108,7 @@ public class petersjLISnlogn {
 
         return heaps.size();
     }
+
     public static int binSearchHeap(int key){
 
         int s = 0;
@@ -74,20 +116,33 @@ public class petersjLISnlogn {
         while (s <= e){
             int mid = (s + e)/2;
             int heapTopVal = heaps.get(mid).peek().value;
-            if (key >= heapTopVal) s = mid +1;
+            if (key > heapTopVal) s = mid +1;
             else e = mid-1;
         }
         if (s < heaps.size()) return s;
         return -1;//no heap is found
     }
 
-    public static void printLis(ElementNode head){
+    private static void writeToFileResult(int max, long estimatedTimeMilliSec, long estimatedTimeNano, ElementNode node) {
 
-        if (head.pointer == null ) System.out.printf("%d ",head.value);
-        else {
-            printLis(head.pointer);
-            System.out.printf("%d ",head.value);
+        try {
+            PrintWriter out = new PrintWriter(new FileOutputStream("output.txt"));
+            out.printf("Length: %d\n",max);
+            out.printf("LIS: ");
+            out.write(printLis(node));
+            out.printf("\nTotal Execution Time: %d.%s millisecond(s)\n",estimatedTimeMilliSec,
+                    String.valueOf(estimatedTimeNano).substring(0,3));
+            out.flush();
+
+        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
         }
+    }
+
+    public static String printLis(ElementNode head){
+
+        if (head.pointer == null ) return String.valueOf(head.value);
+            return printLis(head.pointer) + " "+ head.value;
     }
 }
 

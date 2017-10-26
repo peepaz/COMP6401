@@ -71,7 +71,7 @@ public class LongestIncreasingSeqBr {
                 }
 
             }
-            //find next value in the possibility
+            //find subsequent values in the possibility
             for (int j = i+1; j < bitSeq.length; j++) {
                 if (bitSeq[j] == 1){
                     if (M[i] < M[j]){ // check to see if it's increasing

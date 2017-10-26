@@ -28,7 +28,8 @@ static int[] A = {2, 15, 3, 7, 8, 6, 18,3,3,3,3,3,3,3,3,4,4,7,9,9,100,4,67,67,89
 			System.out.printf("%d ",A[i]);
 		}
 		System.out.println();
-		System.out.printf("L: ");
+		System.out.printf("L: ");		System.out.printf("\nmax is: %d\n",max);
+
 		for (int i = 0; i < L.length; i++) {
 			System.out.printf("0%d ",L[i]);
 		}
@@ -38,7 +39,6 @@ static int[] A = {2, 15, 3, 7, 8, 6, 18,3,3,3,3,3,3,3,3,4,4,7,9,9,100,4,67,67,89
 			System.out.printf("0%d ",E[i]+1);
 		}
 		
-		System.out.printf("\nmax is: %d\n",max);
 		for (int i = 0; i < L.length; i++) {
 			if (max ==L[i]) {
 				System.out.printf("Sequence: ");
