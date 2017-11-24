@@ -12,7 +12,7 @@ public class Thesaurus {
     public static void main (String[] args){
         try {
             //noinspection Since15,Since15
-            Scanner in = new Scanner (new FileInputStream("input.txt"));
+            Scanner in = new Scanner (new FileInputStream("input71.txt"));
             Map<String,FreqAndPos> wordFreqCountandPos = new TreeMap<>();
             ArrayList<ArrayList<String>> words =  new ArrayList<>();
             int listPos = 0;

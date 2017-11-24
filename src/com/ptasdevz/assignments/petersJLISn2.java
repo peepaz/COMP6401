@@ -20,7 +20,7 @@ public class petersJLISn2 {
         int [] tempStorage = new int[10000];
         try {
 
-            FileReader in = new FileReader("input.txt");
+            FileReader in = new FileReader("input71.txt");
             int numberCount = 0;
             while (true) {
 
