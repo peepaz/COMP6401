@@ -6,7 +6,7 @@ package com.ptasdevz.classwork;
 public class LongestIncreasingSeqBr {
 
 //    static int[] A = {35,31,22,30,27,29,21,32,24,28};
-    static int[] A = {2, 15, 3, 7, 8, 6, 18,3,3,3,3,3,3,3,3,4,4,7,9,9,100,4,67,67,89,10,79,34};
+    static int[] A = {2, 15, 3, 7, 8, 6, 18,3,3,4,4,7,9,9,100,4,67,67,89,10,79,34};
 //            static int[] A = {30,56,23,21,12,29};
 
 
