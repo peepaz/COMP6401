@@ -4,8 +4,8 @@ public class GetMaxDivisors {
 
     public static void main(String [] args){
 
-        int m =3;
-        int n =50;
+        int m =2;
+        int n =5;
         int num = getMaxDivisors1(m,n);
         System.out.printf("%d \n",num);
 
@@ -32,7 +32,7 @@ public class GetMaxDivisors {
     private static int getMaxDivisors1(int m, int n) {
         int maxDivisors = 0;
         int num =0;
-        for (int i = m; i <=n; i++) {
+        for (int i = m; i <=n; i++) { //iterate through range and find the divisor count for each value
             int divisors=0;
             int d = 2;
             while (d*d<i){ //up to root m
@@ -42,6 +42,8 @@ public class GetMaxDivisors {
                 ++d;
             }
             if (d*d == n) divisors++;
+
+            //update count if necessary
             if (divisors > maxDivisors){
 
                 maxDivisors = divisors;

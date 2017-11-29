@@ -12,8 +12,6 @@ public class LongestIncreasingSeqBr1 {
 
     static int [] overallPath = new int[A.length];
     static  int [] bitSeq;
-    static int zeroCounter = 0;
-
 
     public static void main (String[] args){
 
@@ -32,15 +30,11 @@ public class LongestIncreasingSeqBr1 {
 
     public static int getLIS(int[] M){
 
-        int seqIncrCount=0;
         int maxOverall=0;
-        int [] seqPath = new int[bitSeq.length];
-        for (int i = 0; i <bitSeq.length; i++) {
-            bitSeq[i]=0;
-            seqPath[i] =0;
-        }
 
         while (true){
+            int [] seqPath = new int[bitSeq.length];
+            int seqIncrCount=0;
             boolean isFirstBitChecked = false;
 
             //increment to next sequence
@@ -77,11 +71,7 @@ public class LongestIncreasingSeqBr1 {
                     overallPath[j] = seqPath[j];
                 }
             }
-            //reset sequence path and increasing count
-            for (int j = 0; j < seqPath.length; j++) {
-                seqPath[j]=0;
-            }
-            seqIncrCount =0;
+
         }
         return maxOverall;
     }
