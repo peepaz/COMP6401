@@ -15,7 +15,7 @@ public class petersjThesaurus {
 
         try {
             //noinspection Since15,Since15
-            Scanner in = new Scanner (new FileInputStream("input.txt"));
+            Scanner in = new Scanner (new FileInputStream("input71.txt"));
 
             TreeMap<Integer,TreeMap<String,String>> words =  new TreeMap<>();
 

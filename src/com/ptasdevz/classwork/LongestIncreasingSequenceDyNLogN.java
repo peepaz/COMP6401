@@ -49,7 +49,7 @@ public class LongestIncreasingSequenceDyNLogN {
 
                 if (heapPos != -1) { //add to existing heap
                     Stack<ElementNode> heap = heaps.get(heapPos);
-                    if (heapPos == 0) {
+                    if (heapPos == 0) {// no pointer
                         elementNode.value = A[i];
                         elementNode.pointer = null;
                     } else {
@@ -60,9 +60,8 @@ public class LongestIncreasingSequenceDyNLogN {
                     heap.push(elementNode);
                 }
                 else { //start new heap
-                    heapPos = heaps.size()-1;
                     Stack<ElementNode> heap = new Stack<>();
-                    Stack<ElementNode> prevHeap = heaps.get(heapPos);
+                    Stack<ElementNode> prevHeap = heaps.get( heaps.size()-1);//last heap
                     elementNode.value = A[i];
                     elementNode.pointer = prevHeap.peek();
                     heap.push(elementNode);

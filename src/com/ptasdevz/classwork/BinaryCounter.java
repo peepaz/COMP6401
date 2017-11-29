@@ -7,7 +7,7 @@ public class BinaryCounter {
 
 	public static void main(String[] args) {
 		
-	int[] bitHolder = new int[30];
+	int[] bitHolder = new int[5];
 	initBitSeq(bitHolder);
 	String startTime = getCurrentTimeStamp();
 	addOne(bitHolder);
